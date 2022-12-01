@@ -4,7 +4,7 @@ import styles from "./index.module.css";
 
 export default function Home() {
   const [animalInput, setAnimalInput] = useState("");
-  const [result, setResult] = useState();
+  const [result, setResult] = useState([]);
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -16,7 +16,7 @@ export default function Home() {
       body: JSON.stringify({ animal: animalInput }),
     });
     const data = await response.json();
-    setResult(data.result);
+    setResult([animalInput + ":" + "\n" + data.result, ...result]);
     setAnimalInput("");
   }
 
@@ -40,7 +40,7 @@ export default function Home() {
           />
           <input type="submit" value="Generate names" />
         </form>
-        <div className={styles.result}>{result}</div>
+        <div>{result.map((res) => {return <div className={styles.result}>{res}</div> })}</div>
       </main>
     </div>
   );
